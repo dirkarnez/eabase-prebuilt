@@ -46,19 +46,18 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release ^
             -DEABASE_BUILD_TESTS=OFF ^
             -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
-            cd cmake-build && cmake --build . && cmake --install . &&^
-            dir
+            cd cmake-build && cmake --build . && cmake --install .
             
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: "EABase/cmake-build/${{ env.cmakeInstallationPath }}"
+          directory: "EABase"
           filename: "${{ env.mingwTargetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "EABase/cmake-build/${{ env.cmakeInstallationPath }}/${{ env.mingwTargetZip }}"
+          artifacts: "EABase/${{ env.mingwTargetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
